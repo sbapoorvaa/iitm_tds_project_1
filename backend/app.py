@@ -13,4 +13,4 @@ if __name__ == "__main__":
     # Use PORT environment variable provided by Render, fallback to 5000
     port = int(os.environ.get("PORT", 5000))
     # Do not use debug=True in production; Render logs will capture output
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)

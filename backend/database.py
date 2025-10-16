@@ -19,7 +19,27 @@ def insert_task(email, task, round_no, brief):
     return None
 
 def update_task_result(task_id, result):
-    supabase.table("tasks").update({"result": result, "status": "completed"}).eq("id", task_id).execute()
+    try:
+        response = supabase.table("tasks").update(
+            {"result": result, "status": "completed"}
+        ).eq("id", task_id).execute()
+    except Exception as e:
+        # Network or client-level error
+        raise Exception(f"Failed to update task {task_id}: {e}")
+
+    # supabase-py returns a response with .data and possibly .error
+    # If there's an error object or no rows were updated, surface it.
+    error = getattr(response, "error", None)
+    data = getattr(response, "data", None)
+
+    if error:
+        raise Exception(f"Supabase error updating task {task_id}: {error}")
+
+    if not data or len(data) == 0:
+        raise Exception(f"No task updated for id {task_id}. Response: {response}")
+
+    # Return the updated row for convenience
+    return data[0]
 
 def get_task(task_id):
     response = supabase.table("tasks").select("*").eq("id", task_id).execute()

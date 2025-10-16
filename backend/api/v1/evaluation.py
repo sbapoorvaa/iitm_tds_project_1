@@ -13,12 +13,15 @@ def evaluate_task():
         "result": "<result>"
     }
     """
+    print("Evaluation endpoint hit")
     data = request.json
     if not data:
         return jsonify({"error": "No data provided"}), 400
 
     task_id = data.get("task_id")
     result = data.get("result")
+    
+    print("Data: ", data)
 
     if not task_id or result is None:
         return jsonify({"error": "Missing task_id or result"}), 400

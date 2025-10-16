@@ -1,7 +1,7 @@
 import os
 from flask import Flask
-from backend.api.v1.task import task_bp
-from backend.api.v1.evaluation import evaluation_bp
+from api.v1.task import task_bp
+from api.v1.evaluation import evaluation_bp
 
 app = Flask(__name__)
 

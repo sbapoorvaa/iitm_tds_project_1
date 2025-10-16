@@ -1,0 +1,6 @@
+{
+  "email": "test@example.com",
+  "secret": "my_student_secret_code",
+  "round": 1,
+  "brief": "Create a simple webpage that says Hello World and has a table drawn at the top middle of the page with 3 rows 3 columns, let the entire page have a gradient background from red to yellow from left to right"
+}

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from backend.database import update_task_result  # Adjusted to absolute import
+from ...database import update_task_result  # Adjusted to absolute import
 
 evaluation_bp = Blueprint("evaluation", __name__)
 

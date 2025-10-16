@@ -4,7 +4,7 @@ services:
     name: llm-code-deployment-v2
     env: python
     region: oregon  # choose your preferred Render region
-    plan: free  # or starter/standard
+    plan: free       # or starter/standard
     buildCommand: pip install -r requirements.txt
     startCommand: python backend/app.py
     branch: main
@@ -12,19 +12,19 @@ services:
     envVars:
       - key: AIPIPE_TOKEN
         fromDatabase: false
-        value: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjIxZjMwMDE4ODBAZHMuc3R1ZHkuaWl0bS5hYy5pbiJ9.5XyRQZAH3FiqKRcEOkh8AUR__wVZKp8ZsVMb5UKrZTQ"
+        fromEnv: AIPIPE_TOKEN
       - key: GITHUB_TOKEN
         fromDatabase: false
-        value: "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"
+        fromEnv: GITHUB_TOKEN
       - key: GITHUB_USERNAME
         fromDatabase: false
-        value: "sbapoorvaa"
+        fromEnv: GITHUB_USERNAME
       - key: SUPABASE_URL
         fromDatabase: false
-        value: "https://uaoklkgrggftpaiychsv.supabase.co"
+        fromEnv: SUPABASE_URL
       - key: SUPABASE_KEY
         fromDatabase: false
-        value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhb2tsa2dyZ2dmdHBhaXljaHN2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDQ0NTM4OCwiZXhwIjoyMDc2MDIxMzg4fQ.CG4GP35d6c3zBCLUFCJIP7PuPz2H-MZpbHEKX8XBC6g"
+        fromEnv: SUPABASE_KEY
       - key: STUDENT_SECRET
         fromDatabase: false
-        value: "my_student_secret_code"
+        fromEnv: STUDENT_SECRET

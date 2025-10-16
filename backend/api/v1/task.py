@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
-from ...llm_generator import generate_code_and_push  # absolute import
-from ...config import STUDENT_SECRET  # absolute import
+# from ...llm_generator import generate_code_and_push  # absolute import
+from llm_generator import generate_code_and_push
+from config import STUDENT_SECRET  # absolute import
 
 task_bp = Blueprint("task", __name__)
 

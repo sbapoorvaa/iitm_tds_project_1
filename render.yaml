@@ -6,7 +6,7 @@ services:
     region: oregon  # choose your preferred Render region
     plan: free       # or starter/standard
     buildCommand: pip install -r requirements.txt
-    startCommand: python backend/app.py
+    startCommand: python -m backend.app
     branch: main
     autoDeploy: true
     envVars:

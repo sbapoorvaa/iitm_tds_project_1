@@ -1,11 +1,51 @@
-# Central evaluation script (you can call different rounds from here)
+# evaluate/evaluate.py
+import logging
+import time
 from round1 import run_round1
 from round2 import run_round2
 
+# Logging config
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 def evaluate(task):
-    if task["round"] == 1:
-        return run_round1(task)
-    elif task["round"] == 2:
-        return run_round2(task)
-    else:
-        return {"error": "Unknown round"}
+    """
+    Central evaluation function.
+    Handles round 1 and round 2 tasks.
+    Returns structured results with logs and execution time.
+    """
+    task_id = task.get("task")
+    round_no = task.get("round")
+    email = task.get("email")
+    nonce = task.get("nonce")
+
+    logger.info(f"Starting evaluation | Task: {task_id} | Round: {round_no} | Email: {email} | Nonce: {nonce}")
+
+    start_time = time.time()
+    result = {"task": task_id, "round": round_no, "status": "pending", "logs": "", "time_taken": 0}
+
+    try:
+        if round_no == 1:
+            eval_result = run_round1(task)
+        elif round_no == 2:
+            eval_result = run_round2(task)
+        else:
+            logger.warning(f"Unknown round: {round_no}")
+            result.update({"status": "failed", "logs": f"Unknown round {round_no}"})
+            return result
+
+        result.update({"status": "success", "logs": str(eval_result)})
+        logger.info(f"Evaluation success | Task: {task_id} | Round: {round_no}")
+
+    except Exception as e:
+        logger.exception("Error during evaluation")
+        result.update({"status": "failed", "logs": str(e)})
+
+    end_time = time.time()
+    result["time_taken"] = round(end_time - start_time, 2)
+    logger.info(f"Task evaluation finished | Task: {task_id} | Time: {result['time_taken']}s")
+
+    return result

@@ -1,7 +1,8 @@
-from supabase import create_client
+from supabase import Client, create_client
 from config import SUPABASE_URL, SUPABASE_KEY
 
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+# Initialize Supabase client
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def insert_task(email, task, round_no, brief):
     data = {
@@ -12,13 +13,16 @@ def insert_task(email, task, round_no, brief):
         "status": "pending"
     }
     response = supabase.table("tasks").insert(data).execute()
-    return response.data[0]["id"]  # return task_id
+    # supabase-py returns response.data as a list of inserted rows
+    if response.data and len(response.data) > 0:
+        return response.data[0]["id"]
+    return None
 
 def update_task_result(task_id, result):
     supabase.table("tasks").update({"result": result, "status": "completed"}).eq("id", task_id).execute()
 
 def get_task(task_id):
     response = supabase.table("tasks").select("*").eq("id", task_id).execute()
-    if response.data:
+    if response.data and len(response.data) > 0:
         return response.data[0]
     return None

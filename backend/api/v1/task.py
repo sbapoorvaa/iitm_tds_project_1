@@ -138,7 +138,7 @@ def create_task():
                 attachments=attachments,
                 repo_url=repo_url
             )
-            prompt_id = prompt["task_id"]
+            prompt_id = r1_prompt["task_id"]
 
             # Modify repo according to brief
             gen_result = generate_code_and_push(

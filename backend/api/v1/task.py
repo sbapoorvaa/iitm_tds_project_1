@@ -99,19 +99,19 @@ def create_task():
             )
             
 
-# Notify evaluation_url after round 1
-        if evaluation_url:
-            payload = {
-                "task_id": prompt_id,
-                "round": round_no,
-                "repo_url": repo_url,
-                "result": {
-                    "commit_sha": commit_sha,
-                    "pages_url": pages_url,
-                    "score": None,     # optional
-                    "feedback": None   # optional
+            # Notify evaluation_url after round 1
+            if evaluation_url:
+                payload = {
+                    "task_id": prompt_id,
+                    "round": round_no,
+                    "repo_url": repo_url,
+                    "result": {
+                        "commit_sha": commit_sha,
+                        "pages_url": pages_url,
+                        "score": None,     # optional
+                        "feedback": None   # optional
+                    }
                 }
-            }
             post_with_retry(evaluation_url, payload)
 
 

@@ -22,31 +22,31 @@ The system is designed for reproducibility, scalability, and ease of evaluation 
 
 ## Architecture
 
-        ┌───────────────────────┐
-        │     Task Requester     │
-        │  (API / Frontend)     │
-        └──────────┬────────────┘
-                   │
-                   ▼
-        ┌───────────────────────┐
-        │     Flask Backend     │
-        │ ───────────────────── │
-        │ /api/v1/task          │  →  Generate & submit tasks
-        │ /api/v1/evaluate      │  →  Receive evaluation results
-        └──────────┬────────────┘
-                   │
-         ┌─────────┴─────────┐
-         ▼                   ▼
-┌─────────────────┐ ┌─────────────────────┐
-│ GitHub Utility │ │ Supabase Database │
-│ (repo, pages) │ │ (prompts/results) │
-└─────────────────┘ └─────────────────────┘
-│
-▼
-┌───────────┐
-│ Evaluator │
-│ Round 1/2 │
-└───────────┘
+                ┌───────────────────────┐
+                │     Task Requester    │
+                │  (API / Frontend)     │
+                └──────────┬────────────┘
+                           │
+                           ▼
+                ┌───────────────────────┐
+                │     Flask Backend     │
+                │ ───────────────────── │
+                │ /api/v1/task          │  →  Generate & submit tasks
+                │ /api/v1/evaluate      │  →  Receive evaluation results
+                └──────────┬────────────┘
+                           │
+                 ┌─────────┴─────────┐
+                 ▼                   ▼
+         ┌─────────────────┐ ┌─────────────────────┐
+         │ GitHub Utility  │ │ Supabase Database   │
+         │ (repo, pages)   │ │ (prompts/results)   │
+         └─────────────────┘ └─────────────────────┘
+          │
+          ▼
+         ┌───────────┐
+         │ Evaluator │
+         │ Round 1/2 │
+         └───────────┘
 
 ---
 

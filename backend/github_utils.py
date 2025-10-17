@@ -1,4 +1,3 @@
-# backend/github_utils.py
 import requests
 import base64
 from config import GITHUB_TOKEN, GITHUB_USERNAME
@@ -11,7 +10,7 @@ def create_repo(repo_name):
         "name": repo_name,
         "private": False,
         "auto_init": True,
-        "license_template": "mit"
+        # Initial license is optional; we'll enforce MIT in LLM generator
     }
     try:
         r = requests.post(url, json=data, headers=headers)
@@ -42,10 +41,17 @@ def enable_github_pages(repo_name):
     data = {"source": {"branch": "main", "path": "/"}}
     try:
         r = requests.post(url, json=data, headers=headers)
-        # GitHub might return 201 Created or 204 No Content
         if r.status_code not in [201, 204]:
             print(f"Warning: GitHub Pages may not be enabled yet (status {r.status_code})")
         return f"https://{GITHUB_USERNAME}.github.io/{repo_name}/"
     except requests.HTTPError as e:
         print(f"Error enabling GitHub Pages for {repo_name}: {e.response.text}")
         raise
+
+def check_file_exists_in_repo(repo_url, file_path):
+    """Checks if a file exists in the given GitHub repo."""
+    repo_name = repo_url.rstrip("/").split("/")[-1]
+    url = f"https://api.github.com/repos/{GITHUB_USERNAME}/{repo_name}/contents/{file_path}"
+    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    r = requests.get(url, headers=headers)
+    return r.status_code == 200

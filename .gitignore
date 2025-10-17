@@ -1,5 +1,3 @@
-# .gitignore
-.vercel
 .env
 __pycache__/
 render.yaml

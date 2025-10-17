@@ -1,10 +1,8 @@
-# evaluate/evaluate.py
 import logging
 import time
 from round1 import run_round1
 from round2 import run_round2
 
-# Logging config
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
@@ -14,7 +12,7 @@ logger = logging.getLogger(__name__)
 def evaluate(task):
     """
     Central evaluation function.
-    Handles round 1 and round 2 tasks.
+    Handles round 1 and any subsequent rounds.
     Returns structured results with logs and execution time.
     """
     task_id = task.get("task")
@@ -30,12 +28,8 @@ def evaluate(task):
     try:
         if round_no == 1:
             eval_result = run_round1(task)
-        elif round_no == 2:
+        else:  # Round 2 and beyond
             eval_result = run_round2(task)
-        else:
-            logger.warning(f"Unknown round: {round_no}")
-            result.update({"status": "failed", "logs": f"Unknown round {round_no}"})
-            return result
 
         result.update({"status": "success", "logs": str(eval_result)})
         logger.info(f"Evaluation success | Task: {task_id} | Round: {round_no}")

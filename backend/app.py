@@ -1,9 +1,11 @@
 import os
 from flask import Flask
+from flask_cors import CORS  # Add this
 from api.v1.task import task_bp
 from api.v1.evaluation import evaluation_bp
 
 app = Flask(__name__)
+CORS(app)
 
 # Register Blueprints
 app.register_blueprint(task_bp, url_prefix="/api/v1")

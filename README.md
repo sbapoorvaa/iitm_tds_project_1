@@ -22,31 +22,31 @@ The system is designed for reproducibility, scalability, and ease of evaluation 
 
 ## Architecture
 
-        ┌───────────────────────┐
-        │     Task Requester     │
-        │  (API / Frontend)     │
-        └──────────┬────────────┘
-                   │
-                   ▼
-        ┌───────────────────────┐
-        │     Flask Backend     │
-        │ ───────────────────── │
-        │ /api/v1/task          │  →  Generate & submit tasks
-        │ /api/v1/evaluate      │  →  Receive evaluation results
-        └──────────┬────────────┘
-                   │
-         ┌─────────┴─────────┐
-         ▼                   ▼
-┌─────────────────┐ ┌─────────────────────┐
-│ GitHub Utility │ │ Supabase Database │
-│ (repo, pages) │ │ (prompts/results) │
-└─────────────────┘ └─────────────────────┘
-│
-▼
-┌───────────┐
-│ Evaluator │
-│ Round 1/2 │
-└───────────┘
+                ┌───────────────────────┐
+                │     Task Requester    │
+                │  (API / Frontend)     │
+                └──────────┬────────────┘
+                           │
+                           ▼
+                ┌───────────────────────┐
+                │     Flask Backend     │
+                │ ───────────────────── │
+                │ /api/v1/task          │  →  Generate & submit tasks
+                │ /api/v1/evaluate      │  →  Receive evaluation results
+                └──────────┬────────────┘
+                           │
+                 ┌─────────┴─────────┐
+                 ▼                   ▼
+         ┌─────────────────┐ ┌─────────────────────┐
+         │ GitHub Utility  │ │ Supabase Database   │
+         │ (repo, pages)   │ │ (prompts/results)   │
+         └─────────────────┘ └─────────────────────┘
+          │
+          ▼
+         ┌───────────┐
+         │ Evaluator │
+         │ Round 1/2 │
+         └───────────┘
 
 ---
 
@@ -161,3 +161,18 @@ python backend/app.py
 - Build a frontend dashboard for task management and visualization.
 - Extend evaluation metrics with detailed automated feedback.
 - Enhanced logging, error reporting, and monitoring.
+
+## Sample Tester File
+```json
+{
+  "email": <email_here>,
+  "name": <name_here>,
+  "secret": <your_secret_here>,
+  "task": <one-liner-about-task>,
+  "round": <round-number: int>,
+  "nonce": <nonce-here>,
+  "brief": <a-brief-description-of-what-needs-to-be-done>,
+  "checks": <list-of-checks-to-be-performed>,
+  "evaluation_url": <url-to-evaluate-the-git-commit: optional>
+}
+```

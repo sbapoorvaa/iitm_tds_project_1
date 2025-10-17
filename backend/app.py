@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from flask_cors import CORS  # Add this
+from flask_cors import CORS 
 from api.v1.task import task_bp
 from api.v1.evaluation import evaluation_bp
 
